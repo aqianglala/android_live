@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.zhy.autolayout.AutoLinearLayout android:id="@+id/content"
+                                     xmlns:android="http://schemas.android.com/apk/res/android"
+                                     xmlns:tools="http://schemas.android.com/tools"
+                                     android:layout_width="match_parent"
+                                     android:layout_height="match_parent"
+                                     android:background="@color/background_floating_material_dark"
+                                     android:orientation="vertical"
+                                     tools:context=".CameraStreamingActivity">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_parent"
+        android:layout_width="match_parent"
+        android:layout_height="640px">
+
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/rl_child"
+            android:layout_width="210px"
+            android:layout_height="280px"
+            android:layout_alignParentBottom="true">
+
+            <com.pili.pldroid.streaming.widget.AspectFrameLayout
+                android:id="@+id/cameraPreview_afl"
+                android:layout_width="210px"
+                android:layout_height="280px"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true">
+
+                <android.opengl.GLSurfaceView
+                    android:id="@+id/cameraPreview_surfaceView"
+                    android:layout_width="210px"
+                    android:layout_height="280px"
+                    android:layout_gravity="center"/>
+
+            </com.pili.pldroid.streaming.widget.AspectFrameLayout>
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <com.pili.pldroid.player.widget.VideoView
+            android:id="@+id/video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/et_play"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="播放地址"
+            />
+
+        <Button
+            android:id="@+id/btn_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放"
+            />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/et_push"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="播放地址"
+            />
+
+        <Button
+            android:id="@+id/btn_push"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="推流"
+            />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <TextView
+        android:id="@+id/streamingStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/pldroid_streaming_item_padding"
+        android:layout_marginTop="@dimen/pldroid_streaming_item_padding"
+        android:text="@string/string_state_ready"
+        android:textColor="@color/pldroid_streaming_yellow"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/toggleRecording_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="center"
+        android:background="@drawable/shutter_button"
+
+        android:layout_marginBottom="@dimen/pldroid_streaming_item_padding"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+
+</com.zhy.autolayout.AutoLinearLayout>
