@@ -106,5 +106,6 @@
     <orderEntry type="library" exported="" name="ijkmediaplayer" level="project" />
     <orderEntry type="library" exported="" name="glide-3.7.0" level="project" />
     <orderEntry type="library" exported="" name="gson-2.5" level="project" />
+    <orderEntry type="module" module-name="chat" exported="" />
   </component>
 </module>

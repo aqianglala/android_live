@@ -1,21 +1,19 @@
 package com.pili.pldroid.streaming.camera.demo;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.pili.pldroid.streaming.CameraStreamingManager;
-import com.pili.pldroid.streaming.camera.demo.utils.StreamJsonUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -23,7 +21,7 @@ import java.util.List;
 /**
  * Created by jerikc on 15/7/6.
  */
-public class StreamingBaseActivity extends Activity implements
+public class StreamingBaseActivity extends FragmentActivity implements
         CameraStreamingManager.StreamingSessionListener,
         CameraStreamingManager.StreamingStateListener {
 
@@ -105,13 +103,13 @@ public class StreamingBaseActivity extends Activity implements
 //                SharedLibraryNameHelper.PLSharedLibraryType.PL_SO_TYPE_H264, "pldroid_streaming_h264_encoder_v7a");
 
 //        String streamJsonStrFromServer = getIntent().getStringExtra("stream_json_str");
-        try {
-            mJSONObject = new JSONObject(StreamJsonUtils.createStreamJson("rtmp://192.168.1" +
-                    ".160/live/123"));
-//            mJSONObject = new JSONObject(StreamJsonUtils.createStreamJson("rtmp://192.168.1.160/live/456"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            mJSONObject = new JSONObject(StreamJsonUtils.createStreamJson("rtmp://192.168.1" +
+//                    ".160/live/123"));
+////            mJSONObject = new JSONObject(StreamJsonUtils.createStreamJson("rtmp://192.168.1.160/live/456"));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

@@ -116,22 +116,22 @@ public class SWCodecCameraStreamingActivity extends StreamingBaseActivity
         mVideoView.setOnPreparedListener(this);
 
         AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
-        afl.setShowMode(AspectFrameLayout.SHOW_MODE.REAL);
+        afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
         GLSurfaceView glSurfaceView = (GLSurfaceView) findViewById(R.id.cameraPreview_surfaceView);
 
         mShutterButton = (Button) findViewById(R.id.toggleRecording_button);
 
         mSatusTextView = (TextView) findViewById(R.id.streamingStatus);
 
-        StreamingProfile.Stream stream = new StreamingProfile.Stream(mJSONObject);
+//        StreamingProfile.Stream stream = new StreamingProfile.Stream(mJSONObject);
         mProfile = new StreamingProfile();
         mProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_MEDIUM1)
                 .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM2)
-                .setPreferredVideoEncodingSize(960, 544)
-                .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_SIZE_VGA)
+//                .setPreferredVideoEncodingSize(960, 544)
+                .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_HEIGHT_240)
                 .setEncoderRCMode(StreamingProfile.EncoderRCModes.QUALITY_PRIORITY)
-                .setStream(stream)
-//                .setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.PORT)
+//                .setStream(stream)
+                .setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.PORT)
                 .setSendingBufferProfile(new StreamingProfile.SendingBufferProfile(0.2f, 0.8f, 3.0f, 20 * 1000));
 
         CameraStreamingSetting setting = new CameraStreamingSetting();
@@ -226,9 +226,13 @@ public class SWCodecCameraStreamingActivity extends StreamingBaseActivity
         super.onStateHandled(state, extra);
         switch (state) {
             case CameraStreamingManager.STATE.SENDING_BUFFER_HAS_FEW_ITEMS:
-                return false;
+                mProfile.improveVideoQuality(1);
+                mCameraStreamingManager.notifyProfileChanged(mProfile);
+                return true;
             case CameraStreamingManager.STATE.SENDING_BUFFER_HAS_MANY_ITEMS:
-                return false;
+                mProfile.reduceVideoQuality(1);
+                mCameraStreamingManager.notifyProfileChanged(mProfile);
+                return true;
         }
         return false;
     }
@@ -326,6 +330,7 @@ public class SWCodecCameraStreamingActivity extends StreamingBaseActivity
                 mCameraStreamingManager.setStreamingProfile(mProfile);
 
                 // 开始推流
+                startStreaming();
                 break;
         }
     }
