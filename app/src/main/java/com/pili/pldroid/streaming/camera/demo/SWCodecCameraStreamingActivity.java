@@ -116,7 +116,7 @@ public class SWCodecCameraStreamingActivity extends StreamingBaseActivity
         mVideoView.setOnPreparedListener(this);
 
         AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
-        afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
+        afl.setShowMode(AspectFrameLayout.SHOW_MODE.REAL);
         GLSurfaceView glSurfaceView = (GLSurfaceView) findViewById(R.id.cameraPreview_surfaceView);
 
         mShutterButton = (Button) findViewById(R.id.toggleRecording_button);
@@ -127,8 +127,8 @@ public class SWCodecCameraStreamingActivity extends StreamingBaseActivity
         mProfile = new StreamingProfile();
         mProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_MEDIUM1)
                 .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM2)
-//                .setPreferredVideoEncodingSize(960, 544)
-                .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_HEIGHT_240)
+//                .setPreferredVideoEncodingSize(720, 405);//发现这个设置了没效果
+                .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_HEIGHT_480)
                 .setEncoderRCMode(StreamingProfile.EncoderRCModes.QUALITY_PRIORITY)
 //                .setStream(stream)
                 .setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.PORT)

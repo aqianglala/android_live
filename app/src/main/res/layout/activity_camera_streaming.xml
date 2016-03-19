@@ -12,49 +12,36 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/rl_parent"
         android:layout_width="match_parent"
-        android:layout_height="600px">
+        android:layout_height="600px"
+        android:layout_alignParentTop="true">
 
 
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rl_child"
-            android:layout_width="210px"
-            android:layout_height="280px"
+            android:layout_width="250px"
+            android:layout_height="330px"
             android:layout_alignParentBottom="true">
 
             <com.pili.pldroid.streaming.widget.AspectFrameLayout
                 android:id="@+id/cameraPreview_afl"
-                android:layout_width="210px"
-                android:layout_height="280px"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true">
-
-                <android.opengl.GLSurfaceView
-                    android:id="@+id/cameraPreview_surfaceView"
-                    android:layout_width="210px"
-                    android:layout_height="280px"
-                    android:layout_gravity="center"/>
-
-            </com.pili.pldroid.streaming.widget.AspectFrameLayout>
-
-        </com.zhy.autolayout.AutoRelativeLayout>
-
-
-        <com.pili.pldroid.streaming.camera.demo.widget.AspectLayout
-            android:id="@+id/aspect_layout"
-            android:layout_width="1000px"
-            android:layout_height="600px">
-            <com.pili.pldroid.player.widget.VideoView
-                android:id="@+id/video_view"
-                android:layout_width="1000px"
-                android:layout_height="600px"
-                android:layout_centerInParent="true"
+                android:layout_width="250px"
+                android:layout_height="330px"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
+                >
 
-                />
-        </com.pili.pldroid.streaming.camera.demo.widget.AspectLayout>
+                <android.opengl.GLSurfaceView
+                    android:id="@+id/cameraPreview_surfaceView"
+                    android:layout_width="250px"
+                    android:layout_height="330px"
+                    android:layout_gravity="bottom"
+                    />
+
+            </com.pili.pldroid.streaming.widget.AspectFrameLayout>
+
+        </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
@@ -73,8 +60,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#ffffff"
                     android:hint="播放地址"
+                    android:textColor="#ffffff"
                     />
 
                 <Button
@@ -96,8 +83,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#ffffff"
                     android:hint="播放地址"
+                    android:textColor="#ffffff"
                     />
 
                 <Button
@@ -123,9 +110,9 @@
                 android:id="@+id/toggleRecording_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="right"
                 android:layout_marginBottom="@dimen/pldroid_streaming_item_padding"
                 android:background="@drawable/shutter_button"
 
@@ -136,12 +123,37 @@
         </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoRelativeLayout>
 
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="650px"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <com.pili.pldroid.streaming.camera.demo.widget.AspectLayout
+            android:id="@+id/aspect_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+            <com.pili.pldroid.player.widget.VideoView
+                android:id="@+id/video_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                />
+        </com.pili.pldroid.streaming.camera.demo.widget.AspectLayout>
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
     <fragment
         android:id="@+id/id_fragment"
+        android:name="com.pili.pldroid.streaming.camera.demo.fragments.ChatFragment"
         android:layout_width="match_parent"
         android:layout_height="600px"
-        android:layout_alignParentBottom="true"
-        android:name="com.pili.pldroid.streaming.camera.demo.fragments.ChatFragment"/>
+        android:layout_alignParentBottom="true"/>
 
 
 </com.zhy.autolayout.AutoRelativeLayout>
