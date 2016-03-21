@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--<android.support.v4.widget.DrawerLayout-->
+    <!--android:id="@+id/drawerLayout"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:fitsSystemWindows="true">-->
+
 <com.zhy.autolayout.AutoRelativeLayout
-    android:id="@+id/content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical"
     tools:context=".CameraStreamingActivity">
 
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/rl_parent"
         android:layout_width="match_parent"
-        android:layout_height="600px"
+        android:layout_height="550px"
+        android:background="#000000"
         android:layout_alignParentTop="true">
 
 
@@ -26,10 +36,10 @@
                 android:id="@+id/cameraPreview_afl"
                 android:layout_width="250px"
                 android:layout_height="330px"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
                 >
 
                 <android.opengl.GLSurfaceView
@@ -38,94 +48,15 @@
                     android:layout_height="330px"
                     android:layout_gravity="bottom"
                     />
-
             </com.pili.pldroid.streaming.widget.AspectFrameLayout>
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
-        <com.zhy.autolayout.AutoLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
-
-            <com.zhy.autolayout.AutoLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-
-                <EditText
-                    android:id="@+id/et_play"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="播放地址"
-                    android:textColor="#ffffff"
-                    />
-
-                <Button
-                    android:id="@+id/btn_play"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="播放"
-                    />
-            </com.zhy.autolayout.AutoLinearLayout>
-
-            <com.zhy.autolayout.AutoLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-
-                <EditText
-                    android:id="@+id/et_push"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="播放地址"
-                    android:textColor="#ffffff"
-                    />
-
-                <Button
-                    android:id="@+id/btn_push"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="推流"
-                    />
-            </com.zhy.autolayout.AutoLinearLayout>
-
-            <TextView
-                android:id="@+id/streamingStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginLeft="@dimen/pldroid_streaming_item_padding"
-                android:layout_marginTop="@dimen/pldroid_streaming_item_padding"
-                android:text="@string/string_state_ready"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/pldroid_streaming_yellow"/>
-
-            <Button
-                android:id="@+id/toggleRecording_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="right"
-                android:layout_marginBottom="@dimen/pldroid_streaming_item_padding"
-                android:background="@drawable/shutter_button"
-
-                android:clickable="true"
-                android:focusable="true"
-                android:scaleType="center"
-                />
-        </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoRelativeLayout>
 
     <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="650px"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
 
@@ -148,12 +79,148 @@
 
     </com.zhy.autolayout.AutoRelativeLayout>
 
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:layout_below="@id/rl_parent">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="20px"
+            android:layout_alignParentRight="true">
+
+            <Button
+                android:id="@+id/btn_audience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="观众"/>
+
+            <Button
+                android:id="@+id/btn_getMic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="抢麦"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <EditText
+                android:id="@+id/et_play"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="播放地址"
+                android:textColor="#ffffff"
+                />
+
+            <Button
+                android:id="@+id/btn_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="播放"
+                />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <EditText
+                android:id="@+id/et_push"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="播放地址"
+                android:textColor="#ffffff"
+                />
+
+            <Button
+                android:id="@+id/btn_push"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推流"
+                />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <TextView
+            android:id="@+id/streamingStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="@dimen/pldroid_streaming_item_padding"
+            android:layout_marginTop="@dimen/pldroid_streaming_item_padding"
+            android:text="@string/string_state_ready"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/pldroid_streaming_yellow"/>
+
+        <Button
+            android:id="@+id/toggleRecording_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="right"
+            android:layout_marginBottom="@dimen/pldroid_streaming_item_padding"
+            android:background="@drawable/shutter_button"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="center"
+            />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:id="@+id/id_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:layout_below="@id/ll_btn"/>
     <fragment
         android:id="@+id/id_fragment"
         android:name="com.pili.pldroid.streaming.camera.demo.fragments.ChatFragment"
         android:layout_width="match_parent"
-        android:layout_height="600px"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>
 
 
 </com.zhy.autolayout.AutoRelativeLayout>
+
+    <!--<cn.bingoogolapple.refreshlayout.BGARefreshLayout-->
+        <!--android:id="@+id/BGARefreshLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--&gt;-->
+
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/rv_recyclerview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:overScrollMode="never"-->
+            <!--tools:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+            <!--android:padding="5dp"-->
+            <!--android:scrollbars="none" />-->
+
+    <!--</cn.bingoogolapple.refreshlayout.BGARefreshLayout>-->
+
+    <!--</android.support.v4.widget.DrawerLayout>-->

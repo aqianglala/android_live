@@ -1,16 +1,20 @@
 package com.pili.pldroid.streaming.camera.demo;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.hardware.Camera;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +32,8 @@ import com.pili.pldroid.streaming.widget.AspectFrameLayout;
 
 import org.json.JSONObject;
 
+import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
@@ -67,6 +73,9 @@ public class SWCodecCameraStreamingActivity extends StreamingBaseActivity
     private Button btn_push;
 
     private String url;
+    private BGARefreshLayout mRefreshLayout;
+    private RecyclerView mRecyclerView;
+    private int measuredHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +86,26 @@ public class SWCodecCameraStreamingActivity extends StreamingBaseActivity
         }
         super.onCreate(savedInstanceState);
         mContext = this;
-
         setContentView(R.layout.activity_camera_streaming);
+
+        // 初始化侧滑菜单
+//        initAudienceMenu();
+        final View view = findViewById(R.id.id_view);
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                measuredHeight = view.getMeasuredHeight();
+
+                Fragment chatFragment = getFragmentManager().findFragmentById(R.id.id_fragment);
+                // 获取fragment的根视图
+                View rootView = chatFragment.getView();
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rootView
+                        .getLayoutParams();
+                layoutParams.height = measuredHeight;
+                rootView.setLayoutParams(layoutParams);
+            }
+        });
 
         et_play = (EditText) findViewById(R.id.et_play);
         et_push = (EditText) findViewById(R.id.et_push);
@@ -162,6 +189,30 @@ public class SWCodecCameraStreamingActivity extends StreamingBaseActivity
             }
         });
 
+    }
+
+//    private void initAudienceMenu() {
+//        mRefreshLayout = (BGARefreshLayout) findViewById(R.id.BGARefreshLayout);
+//        mRecyclerView = (RecyclerView) findViewById(R.id.rv_recyclerview);
+//
+//        initRefreshViewHolder();
+//
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//    }
+
+    private void initRefreshViewHolder() {
+//        BGAMoocStyleRefreshViewHolder moocStyleRefreshViewHolder = new
+//                BGAMoocStyleRefreshViewHolder(getActivity(), true);
+        BGANormalRefreshViewHolder bgaNormalRefreshViewHolder = new BGANormalRefreshViewHolder
+                (this, true);
+//        bgaNormalRefreshViewHolder.setPullDownRefreshText("松开加载更多");
+//        bgaNormalRefreshViewHolder.setRefreshingText("加载中...");
+//        bgaNormalRefreshViewHolder.setReleaseRefreshText("加载中...");
+        bgaNormalRefreshViewHolder.setLoadingMoreText("加载中...");
+//        moocStyleRefreshViewHolder.setUltimateColor(R.color.colorPrimary);
+//        moocStyleRefreshViewHolder.setOriginalImage(R.mipmap.talkpal_logo);
+//        moocStyleRefreshViewHolder.setSpringDistanceScale(0.2f);
+        mRefreshLayout.setRefreshViewHolder(bgaNormalRefreshViewHolder);
     }
 
     @Override
