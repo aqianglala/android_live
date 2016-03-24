@@ -3,6 +3,68 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="me_item_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">30px</item>
+    </style>
+
+    <!--黑色，16sp-->
+    <style name="black_16sp_font">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/font_black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!--灰色，16sp-->
+    <style name="gray_16sp_font">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!--黑色，16sp，padding30px，带右箭头，且有选择器-->
+    <style name="setting_item_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/font_black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:clickable">true</item>
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">30px</item>
+        <item name="android:drawableRight">@mipmap/arrows_right</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="line_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.2dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
+    <style name="bg_while_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/white</item>
     </style>
 
 </resources>

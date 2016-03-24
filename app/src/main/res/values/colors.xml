@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#1B8AEB</color>
+    <color name="colorPrimaryDark">#1B7AEB</color>
+    <color name="colorAccent">#FF4081</color>
+
     <color name="pldroid_streaming_white">#fff</color>
     <color name="pldroid_streaming_red">#f00</color>
     <color name="pldroid_streaming_yellow">#FFFF00</color>
+
+    <color name="font_black">#000000</color>
+    <color name="font_gray">#4e4c4c</color>
+
+    <color name="me_bg_gray">#ededed</color>
+    <color name="white">#ffffff</color>
+
+    <color name="font_blue">#00CAFD</color>
+    <color name="font_dark_gray">#6F6F74</color>
+
 </resources>

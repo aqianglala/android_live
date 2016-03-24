@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/me_bg_gray"
+        android:orientation="vertical"
+        >
+        <com.zhy.autolayout.AutoLinearLayout
+            style="@style/bg_while_layout">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_avatar"
+            style="@style/me_item_style"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingTop="10px"
+            android:paddingBottom="10px">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/avatar"
+                style="@style/black_16sp_font"/>
+
+            <ImageView
+                android:layout_width="114px"
+                android:layout_height="114px"
+                android:src="@drawable/ic_launcher"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arrows_right"
+                android:layout_marginLeft="10px"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                style="@style/line_style"/>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            style="@style/bg_while_layout"
+            android:layout_marginTop="@dimen/item_margin">
+
+            <View
+                style="@style/line_style"/>
+            <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_nickname"
+            style="@style/me_item_style">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/nickname"
+                style="@style/black_16sp_font"/>
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrows_right"
+                android:text="@string/nickname"
+                android:drawablePadding="@dimen/item_margin"
+                style="@style/gray_16sp_font"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                style="@style/line_style"/>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_sex"
+            style="@style/me_item_style">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/sex"
+                style="@style/black_16sp_font"/>
+
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrows_right"
+                android:text="女"
+                android:drawablePadding="@dimen/item_margin"
+                style="@style/gray_16sp_font"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                style="@style/line_style"/>
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_location"
+            style="@style/me_item_style">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                style="@style/black_16sp_font"/>
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrows_right"
+                android:text="瓦努阿图"
+                android:drawablePadding="@dimen/item_margin"
+                style="@style/gray_16sp_font"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                style="@style/line_style"/>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_school"
+            style="@style/me_item_style">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/school"
+                style="@style/black_16sp_font"/>
+
+            <TextView
+                android:id="@+id/tv_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrows_right"
+                android:text="火星大学"
+                android:drawablePadding="@dimen/item_margin"
+                style="@style/gray_16sp_font"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                style="@style/line_style"/>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_summary"
+            style="@style/me_item_style">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:minWidth="150px"
+                android:layout_height="wrap_content"
+                android:text="@string/summary"
+                style="@style/black_16sp_font"/>
+
+            <TextView
+                android:id="@+id/tv_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrows_right"
+                android:drawablePadding="@dimen/item_margin"
+                android:text="自我介绍太单调，不如来好好聊聊~~~"
+                style="@style/gray_16sp_font"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                style="@style/line_style"/>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</layout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary">
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="talkpal世界说"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="40px"
+                android:layout_height="40px"
+                android:src="@drawable/icon_title_search"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackground"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+
+        <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+            android:id="@+id/rl_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:listSelector="@android:color/transparent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</layout>

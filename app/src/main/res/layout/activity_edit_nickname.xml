@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/me_bg_gray"
+        android:orientation="vertical"
+        >
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:gravity="center_vertical"
+            style="@style/me_item_style">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nickname"
+                style="@style/black_16sp_font"/>
+
+            <EditText
+                android:id="@+id/et_nickname"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="@dimen/item_margin"
+                android:hint="3-15个字符"
+                />
+            <Button
+                android:id="@+id/clean"
+                android:layout_width="40px"
+                android:layout_height="40px"
+                android:background="@drawable/kk_search_clear_icon"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</layout>

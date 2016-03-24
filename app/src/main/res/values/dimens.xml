@@ -11,4 +11,9 @@
     <dimen name="pldroid_streaming_square_corner_radius">8dip</dimen>
     <dimen name="pldroid_streaming_red_circle_padding">8dip</dimen>
     <dimen name="pldroid_streaming_red_square_padding">16dip</dimen>
+
+    <dimen name="live_title_size">16sp</dimen>
+    <dimen name="item_margin">20px</dimen>
+
+    <dimen name="small_text">12sp</dimen>
 </resources>

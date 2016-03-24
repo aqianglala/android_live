@@ -149,13 +149,13 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
 
         mRootView = findViewById(R.id.content);
         // player
-        mVideoView = (VideoView) findViewById(R.id.video_view);
+        mVideoView = getViewById(R.id.video_view);
         // push
-        afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
-        glSurfaceView = (GLSurfaceView) findViewById(R.id.cameraPreview_surfaceView);
+        afl =  getViewById(R.id.cameraPreview_afl);
+        glSurfaceView =  getViewById(R.id.cameraPreview_surfaceView);
 
-        mShutterButton = (Button) findViewById(R.id.toggleRecording_button);
-        mSatusTextView = (TextView) findViewById(R.id.streamingStatus);
+        mShutterButton = getViewById(R.id.toggleRecording_button);
+        mSatusTextView =  getViewById(R.id.streamingStatus);
 
     }
     // 设置屏幕不锁屏、屏幕方向、设置actionbar覆盖在内容之上
