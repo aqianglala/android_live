@@ -8,7 +8,8 @@
         android:orientation="vertical"
         >
 
-        <com.zhy.autolayout.AutoRelativeLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary">
@@ -17,21 +18,22 @@
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_gravity="center"
                 android:text="talkpal世界说"
                 android:textColor="@color/white"/>
 
             <ImageView
                 android:id="@+id/iv_search"
-                android:layout_width="40px"
-                android:layout_height="40px"
+                android:layout_width="60px"
+                android:layout_height="60px"
                 android:src="@drawable/icon_title_search"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="?attr/selectableItemBackground"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
-        </com.zhy.autolayout.AutoRelativeLayout>
+        </android.support.v7.widget.Toolbar>
 
 
         <cn.bingoogolapple.refreshlayout.BGARefreshLayout

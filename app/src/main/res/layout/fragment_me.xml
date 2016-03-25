@@ -9,17 +9,16 @@
         android:orientation="vertical"
         >
 
-        <com.zhy.autolayout.AutoLinearLayout
+        <com.zhy.autolayout.AutoRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="403px"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             >
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/ll_user_message"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="315px"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:clickable="true"
@@ -30,45 +29,63 @@
                     android:id="@+id/iv_avatar"
                     android:layout_width="128px"
                     android:layout_height="128px"
-                    android:layout_marginRight="20px"
-                    android:src="@drawable/ic_launcher"/>
+                    android:layout_marginRight="30px"
+                    android:src="@drawable/kk_me_default_head_sculpture"/>
 
-                <com.zhy.autolayout.AutoLinearLayout
+                <FrameLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    >
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/tv_name"
-                        style="@style/black_16sp_font"
+                        android:id="@+id/tv_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="20px"
-                        android:text="123456789"/>
+                        android:layout_gravity="center_vertical"
+                        style="@style/black_16sp_font"
+                        android:text="@string/login"/>
 
                     <com.zhy.autolayout.AutoLinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        >
 
                         <TextView
+                            android:id="@+id/tv_name"
                             style="@style/black_16sp_font"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ID:"/>
-
-                        <TextView
-                            android:id="@+id/tv_id"
-                            style="@style/black_16sp_font"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:paddingBottom="20px"
                             android:text="123456789"/>
+
+                        <com.zhy.autolayout.AutoLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/black_16sp_font"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ID:"/>
+
+                            <TextView
+                                android:id="@+id/tv_id"
+                                style="@style/black_16sp_font"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="123456789"/>
+
+                        </com.zhy.autolayout.AutoLinearLayout>
+
 
                     </com.zhy.autolayout.AutoLinearLayout>
 
-                </com.zhy.autolayout.AutoLinearLayout>
+                </FrameLayout>
+
+
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -77,14 +94,19 @@
 
             </com.zhy.autolayout.AutoLinearLayout>
 
+
             <View
+                android:id="@+id/line"
+                android:layout_below="@id/ll_user_message"
                 style="@style/line_style"/>
 
             <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_follow_fans"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="88px"
                 android:background="@color/white"
                 android:orientation="horizontal"
+                android:layout_below="@id/line"
                 >
 
                 <TextView
@@ -120,10 +142,11 @@
             </com.zhy.autolayout.AutoLinearLayout>
 
             <View
-                style="@style/line_style"/>
+                style="@style/line_style"
+                android:layout_below="@id/ll_follow_fans"/>
 
 
-        </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoRelativeLayout>
 
 
         <com.zhy.autolayout.AutoLinearLayout

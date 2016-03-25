@@ -1,20 +1,32 @@
 package com.pili.pldroid.streaming.camera.demo.activity;
 
-import android.app.SearchManager;
-import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.EditText;
 
 import com.pili.pldroid.streaming.camera.demo.R;
+import com.pili.pldroid.streaming.camera.demo.global.BaseActivity;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_search);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void setListener() {
+
+    }
+
+    @Override
+    protected void processLogic(Bundle savedInstanceState) {
 
     }
 
@@ -22,23 +34,32 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search,menu);
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.id_search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
-
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-
+        SearchView searchView = (SearchView) menu.findItem(R.id.id_search).getActionView();
+        // 设置searchView总是展开，当然，menu文件中的showAsAction不能设置collapseActionView才有效
+        searchView.onActionViewExpanded();
+        // 设置提示语
+        searchView.setQueryHint("请输入...");
+        // 设置确认监听
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onClose() {
+            public boolean onQueryTextSubmit(String query) {
+                showToast(query);
+                // 消费了事件
                 return true;
             }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
         });
+
+        EditText editText = (EditText) searchView.findViewById(R.id.search_src_text);
+        // 设置提示语颜色
+        editText.setHintTextColor(Color.WHITE);
+        // 设置输入文字的颜色
+        editText.setTextColor(Color.WHITE);
+
         return true;
     }
-
 }

@@ -111,4 +111,5 @@
     <string name="modify_password">修改密码</string>
     <string name="feedback">意见反馈</string>
     <string name="about_us">关于我们</string>
+    <string name="login">立即登录</string>
 </resources>

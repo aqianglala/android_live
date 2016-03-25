@@ -1,12 +1,13 @@
 package com.pili.pldroid.streaming.camera.demo.fragments;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 
 import com.pili.pldroid.streaming.camera.demo.R;
+import com.pili.pldroid.streaming.camera.demo.activity.LoginActivity;
 import com.pili.pldroid.streaming.camera.demo.activity.SettingActivity;
+import com.pili.pldroid.streaming.camera.demo.activity.ShowUserInfoActivity;
 import com.pili.pldroid.streaming.camera.demo.databinding.FragmentMeBinding;
 import com.pili.pldroid.streaming.camera.demo.global.BaseFragment;
 
@@ -26,6 +27,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
     @Override
     protected void setListener() {
         mBinding.llSetting.setOnClickListener(this);
+        mBinding.llUserMessage.setOnClickListener(this);
     }
 
     @Override
@@ -44,10 +46,13 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
             case R.id.ll_setting:
                 goActivity(SettingActivity.class);
                 break;
+            case R.id.ll_user_message:
+                if(mBinding.tvLogin.getVisibility()==View.VISIBLE){
+                    goActivity(LoginActivity.class);
+                }else{
+                    goActivity(ShowUserInfoActivity.class);
+                }
+                break;
         }
-    }
-
-    private void goActivity(Class clazz){
-        mActivity.startActivity(new Intent(mActivity,clazz));
     }
 }

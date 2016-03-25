@@ -1,6 +1,7 @@
 package com.pili.pldroid.streaming.camera.demo.global;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -19,7 +20,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
  * 创建时间:15/7/3 上午1:28
  * 描述:
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements View.OnClickListener{
     public String TAG;
     protected BaseApplication mApp;
     protected View mContentView;
@@ -113,5 +114,17 @@ public abstract class BaseFragment extends Fragment {
         if (isVisible()) {
             mActivity.dismissLoadingDialog();
         }
+    }
+
+    /**
+     * 需要处理点击事件时，重写该方法
+     *
+     * @param v
+     */
+    public void onClick(View v) {
+    }
+
+    public void goActivity(Class clazz){
+        mActivity.startActivity(new Intent(mActivity,clazz));
     }
 }
