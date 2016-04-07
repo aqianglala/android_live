@@ -13,6 +13,7 @@
         android:orientation="horizontal"
         android:padding="4dp">
 
+
         <Button
             android:id="@+id/toolbox_btn_send"
             android:layout_width="wrap_content"

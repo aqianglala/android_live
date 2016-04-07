@@ -15,8 +15,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,6 +101,8 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
     private AspectFrameLayout afl;
     private GLSurfaceView glSurfaceView;
 
+    private boolean isShowingFlContent;
+
     protected Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
@@ -133,6 +139,9 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
             }
         }
     };
+    private FrameLayout fl_content;
+    private ImageView iv_getMic;
+    private ImageView iv_audience;
 
 
     @Override
@@ -146,6 +155,10 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
 
         btn_play = getViewById(R.id.btn_play);
         btn_push = getViewById(R.id.btn_push);
+
+        fl_content = getViewById(R.id.fl_content);
+        iv_getMic = getViewById(R.id.iv_getMic);
+        iv_audience = getViewById(R.id.iv_audience);
 
         mRootView = findViewById(R.id.content);
         // player
@@ -219,10 +232,14 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
                 measuredHeight = overLayView.getMeasuredHeight();
                 // 设置chatFragment的高度
                 setChatFragmentHeight();
+                // 设置frameLayout的高度
+                setFlHeight();
             }
         });
         btn_play.setOnClickListener(this);
         btn_push.setOnClickListener(this);
+        iv_getMic.setOnClickListener(this);
+        iv_audience.setOnClickListener(this);
 
         mRootView.addOnLayoutChangeListener(this);
 
@@ -242,6 +259,12 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         });
     }
 
+    private void setFlHeight() {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) fl_content.getLayoutParams();
+        params.height = measuredHeight;
+        fl_content.setLayoutParams(params);
+    }
+
     // 设置chatFragment的高度
     private void setChatFragmentHeight() {
         Fragment chatFragment = getFragmentManager().findFragmentById(R.id.id_fragment);
@@ -258,6 +281,29 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         initPlayer();
         // 初始化推流
         initPush();
+    }
+
+    private void showLayout() {
+        fl_content.setVisibility(View.VISIBLE);
+        TranslateAnimation translateAnimation = new TranslateAnimation(Animation
+                .RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0,
+                Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0);
+        translateAnimation.setFillAfter(true);
+        translateAnimation.setDuration(500);
+        translateAnimation.setInterpolator(this,android.R.interpolator.anticipate_overshoot);
+        fl_content.startAnimation(translateAnimation);
+        isShowingFlContent = true;
+    }
+
+    private void hideLayout() {
+        TranslateAnimation translateAnimation = new TranslateAnimation(Animation
+                .RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0,
+                Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1);
+        translateAnimation.setFillAfter(true);
+        translateAnimation.setDuration(500);
+        translateAnimation.setInterpolator(this,android.R.interpolator.anticipate_overshoot);
+        fl_content.startAnimation(translateAnimation);
+        isShowingFlContent = false;
     }
 
     private void initPlayer() {
@@ -454,6 +500,22 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
 
                 // 开始推流
                 startStreaming();
+                break;
+            case R.id.iv_getMic:
+                // 弹出对话框
+                if(isShowingFlContent){
+                    hideLayout();
+                }else{
+                    showLayout();
+                }
+                break;
+            case R.id.iv_audience:
+                // 弹出对话框
+                if(isShowingFlContent){
+                    hideLayout();
+                }else{
+                    showLayout();
+                }
                 break;
         }
     }
