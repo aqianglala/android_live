@@ -11,8 +11,10 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -34,7 +36,9 @@ import com.pili.pldroid.streaming.StreamingPreviewCallback;
 import com.pili.pldroid.streaming.StreamingProfile;
 import com.pili.pldroid.streaming.SurfaceTextureCallback;
 import com.pili.pldroid.streaming.camera.demo.global.BaseActivity;
+import com.pili.pldroid.streaming.camera.demo.utils.ScreenUtils;
 import com.pili.pldroid.streaming.camera.demo.utils.StreamJsonUtils;
+import com.pili.pldroid.streaming.camera.demo.widget.AspectLayout;
 import com.pili.pldroid.streaming.widget.AspectFrameLayout;
 
 import org.json.JSONObject;
@@ -53,6 +57,7 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         IjkMediaPlayer.OnInfoListener,
         IjkMediaPlayer.OnErrorListener,
         IjkMediaPlayer.OnPreparedListener,
+        IjkMediaPlayer.OnVideoSizeChangedListener,
 
         CameraStreamingManager.StreamingSessionListener,
         CameraStreamingManager.StreamingStateListener{
@@ -103,6 +108,9 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
 
     private boolean isShowingFlContent;
 
+    private AspectLayout mAspectLayout;
+    private ViewGroup.LayoutParams mLayoutParams;
+
     protected Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
@@ -148,7 +156,7 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
     protected void initView(Bundle savedInstanceState) {
         // 设置屏幕不锁屏、屏幕方向、设置actionbar覆盖在内容之上
         globalSet();
-        setContentView(R.layout.activity_camera_streaming);
+        setContentView(R.layout.activity_camera);
 
         et_play = getViewById(R.id.et_play);
         et_push = getViewById(R.id.et_push);
@@ -191,7 +199,7 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
 
     // 初始化推流
     private void initPush() {
-        afl.setShowMode(AspectFrameLayout.SHOW_MODE.REAL);
+        afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
 //        StreamingProfile.Stream stream = new StreamingProfile.Stream(mJSONObject);
         mProfile = new StreamingProfile();
         mProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_MEDIUM1)
@@ -224,12 +232,13 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
 
     @Override
     protected void setListener() {
-        final View overLayView = findViewById(R.id.id_view);
-        overLayView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        final View rl_parent = findViewById(R.id.rl_parent);
+        rl_parent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                overLayView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                measuredHeight = overLayView.getMeasuredHeight();
+                rl_parent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                measuredHeight = ScreenUtils.getScreenHeight(RoomActivity.this) - rl_parent
+                        .getMeasuredHeight() - ScreenUtils.getStatusBarHeidht(RoomActivity.this);
                 // 设置chatFragment的高度
                 setChatFragmentHeight();
                 // 设置frameLayout的高度
@@ -246,6 +255,7 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         mVideoView.setOnErrorListener(this);
         mVideoView.setOnInfoListener(this);
         mVideoView.setOnPreparedListener(this);
+        mVideoView.setOnVideoSizeChangedListener(this);
 
         mShutterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -307,6 +317,7 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
     }
 
     private void initPlayer() {
+        mAspectLayout = (AspectLayout)findViewById(R.id.aspect_layout);
         AVOptions options = new AVOptions();
         options.setInteger(AVOptions.KEY_MEDIACODEC, 0); // 1 -> enable, 0 -> disable
 
@@ -635,5 +646,20 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
 //            return "your choice";
         }
         return null;
+    }
+
+    @Override
+    public void onVideoSizeChanged(IMediaPlayer iMediaPlayer, int width, int height, int sarNum, int sarDen) {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+
+        mLayoutParams = mAspectLayout.getLayoutParams();
+        mLayoutParams.width = displayMetrics.widthPixels;
+        mLayoutParams.height = (int) (displayMetrics.widthPixels * ((float)height/width));
+        mAspectLayout.setLayoutParams(mLayoutParams);
+
+        ViewGroup.LayoutParams layoutParams = mVideoView.getLayoutParams();
+        layoutParams.width = displayMetrics.widthPixels;
+        layoutParams.height = (int) (displayMetrics.widthPixels * ((float)height/width));
+        mVideoView.setLayoutParams(layoutParams);
     }
 }

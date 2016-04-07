@@ -1,7 +1,9 @@
 package com.pili.pldroid.streaming.camera.demo.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -44,6 +46,13 @@ public class ScreenUtils {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
         return screenHeight;
+    }
+
+    public static int getStatusBarHeidht(Activity context){
+        Rect rect = new Rect();
+        context.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        // 状态栏高度
+        return rect.top;
     }
 
     /**
