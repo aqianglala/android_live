@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -150,6 +151,7 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
     private FrameLayout fl_content;
     private ImageView iv_getMic;
     private ImageView iv_audience;
+    private LinearLayout ll_push_container;
 
 
     @Override
@@ -178,6 +180,8 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         mShutterButton = getViewById(R.id.toggleRecording_button);
         mSatusTextView =  getViewById(R.id.streamingStatus);
 
+        ll_push_container = getViewById(R.id.ll_push_container);
+
     }
     // 设置屏幕不锁屏、屏幕方向、设置actionbar覆盖在内容之上
     private void globalSet() {
@@ -205,10 +209,10 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         mProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_MEDIUM1)
                 .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM2)
 //                .setPreferredVideoEncodingSize(720, 405);//发现这个设置了没效果
-                .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_HEIGHT_480)
+//                .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_HEIGHT_480)
                 .setEncoderRCMode(StreamingProfile.EncoderRCModes.QUALITY_PRIORITY)
 //                .setStream(stream)
-                .setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.PORT)
+//                .setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.PORT)
                 .setSendingBufferProfile(new StreamingProfile.SendingBufferProfile(0.2f, 0.8f, 3.0f, 20 * 1000));
 
         CameraStreamingSetting setting = new CameraStreamingSetting();
@@ -243,6 +247,27 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
                 setChatFragmentHeight();
                 // 设置frameLayout的高度
                 setFlHeight();
+            }
+        });
+
+        ll_push_container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                ll_push_container.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int measuredWidth = ll_push_container.getMeasuredWidth();
+                int measuredHeight = ll_push_container.getMeasuredHeight();
+                int height = measuredWidth * 4 / 3;
+
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) afl.getLayoutParams();
+                layoutParams.width = measuredWidth;
+                layoutParams.height = height;
+                afl.setLayoutParams(layoutParams);
+
+                ViewGroup.LayoutParams layoutParams1 = glSurfaceView.getLayoutParams();
+                layoutParams1.width = measuredWidth;
+                layoutParams1.height = height;
+                glSurfaceView.setLayoutParams(layoutParams1);
+
             }
         });
         btn_play.setOnClickListener(this);

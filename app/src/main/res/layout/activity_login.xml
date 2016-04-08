@@ -38,15 +38,15 @@
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/til_phone"
+                android:id="@+id/til_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/et_phone"
+                    android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/Phone_number"
+                    android:hint="@string/email"
                     android:inputType="number"
                     android:maxLines="1"
                     android:singleLine="true"/>

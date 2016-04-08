@@ -29,8 +29,10 @@
 
     <!-- Strings related to login -->
     <string name="Phone_number">Phone number</string>
+    <string name="email">email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_verification">Verification Code</string>
+    <string name="prompt_confirm">confirm passwd</string>
     <string name="prompt_name">Name</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>

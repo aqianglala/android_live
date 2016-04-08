@@ -1,17 +1,29 @@
 package com.pili.pldroid.streaming.camera.demo.activity;
 
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 
 import com.pili.pldroid.streaming.camera.demo.R;
+import com.pili.pldroid.streaming.camera.demo.databinding.ActivityLoginBinding;
 import com.pili.pldroid.streaming.camera.demo.global.BaseActivity;
+import com.pili.pldroid.streaming.camera.demo.viewmodels.LoginActivityViewmodel;
 
+
+/**
+ * A login screen that offers login via email/password.
+ */
 public class LoginActivity extends BaseActivity {
 
+    private LoginActivityViewmodel viewmodel;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_login);
+        ActivityLoginBinding binding=DataBindingUtil.setContentView(this, R.layout.activity_login);
+
+        viewmodel = new LoginActivityViewmodel(this, binding);
+
     }
 
     @Override
@@ -24,11 +36,14 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    public void register(View v){
-
+    public void register(View view){
+        startActivity(new Intent(this,RegisterActivity.class));
     }
 
-    public void login(View v){
-
+    public void login(View view){
+        viewmodel.login();
     }
+
+
 }
+

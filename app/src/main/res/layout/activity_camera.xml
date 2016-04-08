@@ -17,58 +17,30 @@
     android:background="#ffffff"
     tools:context=".CameraStreamingActivity">
 
-    <com.zhy.autolayout.AutoRelativeLayout
+    <RelativeLayout
         android:id="@+id/rl_parent"
         android:layout_width="match_parent"
-        android:layout_height="550px"
+        android:layout_height="548px"
         android:layout_alignParentTop="true">
 
-        <!--<com.zhy.autolayout.AutoRelativeLayout-->
-            <!--android:id="@+id/rl_child"-->
-            <!--android:layout_width="250px"-->
-            <!--android:layout_height="330px"-->
-            <!--android:layout_alignParentBottom="true">-->
-
-            <!--<com.pili.pldroid.streaming.widget.AspectFrameLayout-->
-                <!--android:id="@+id/cameraPreview_afl"-->
-                <!--android:layout_width="250px"-->
-                <!--android:layout_height="330px"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--&gt;-->
-
-                <!--<android.opengl.GLSurfaceView-->
-                    <!--android:id="@+id/cameraPreview_surfaceView"-->
-                    <!--android:layout_width="250px"-->
-                    <!--android:layout_height="330px"-->
-                    <!--android:layout_gravity="bottom"-->
-                    <!--/>-->
-            <!--</com.pili.pldroid.streaming.widget.AspectFrameLayout>-->
-
-        <!--</com.zhy.autolayout.AutoRelativeLayout>-->
-
         <LinearLayout
-            android:id="@+id/rl_child"
-            android:layout_width="240px"
-            android:layout_height="320px"
+            android:id="@+id/ll_push_container"
+            android:layout_width="120dp"
+            android:layout_height="85dp"
             android:orientation="vertical"
-            android:layout_alignParentBottom="true"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_alignParentBottom="true">
 
 
             <com.pili.pldroid.streaming.widget.AspectFrameLayout
                 android:id="@+id/cameraPreview_afl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <android.opengl.GLSurfaceView
                     android:id="@+id/cameraPreview_surfaceView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center" />
 
             </com.pili.pldroid.streaming.widget.AspectFrameLayout>
@@ -76,6 +48,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -98,9 +71,7 @@
 
         </LinearLayout>
 
-    </com.zhy.autolayout.AutoRelativeLayout>
-
-
+    </RelativeLayout>
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="wrap_content"
@@ -225,6 +196,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="gone"
             android:background="#00ff00">
 
         </LinearLayout>
