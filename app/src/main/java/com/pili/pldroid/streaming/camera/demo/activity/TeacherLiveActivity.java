@@ -1,4 +1,4 @@
-package com.pili.pldroid.streaming.camera.demo;
+package com.pili.pldroid.streaming.camera.demo.activity;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -36,6 +36,8 @@ import com.pili.pldroid.streaming.CameraStreamingSetting;
 import com.pili.pldroid.streaming.StreamingPreviewCallback;
 import com.pili.pldroid.streaming.StreamingProfile;
 import com.pili.pldroid.streaming.SurfaceTextureCallback;
+import com.pili.pldroid.streaming.camera.demo.Config;
+import com.pili.pldroid.streaming.camera.demo.R;
 import com.pili.pldroid.streaming.camera.demo.bean.LiveBean;
 import com.pili.pldroid.streaming.camera.demo.global.BaseActivity;
 import com.pili.pldroid.streaming.camera.demo.interfaces.Urls;
@@ -52,7 +54,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
-public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeListener,
+public class TeacherLiveActivity extends BaseActivity  implements View.OnLayoutChangeListener,
         View.OnClickListener,
         StreamingPreviewCallback,
         SurfaceTextureCallback,
@@ -243,8 +245,8 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
             @Override
             public void onGlobalLayout() {
                 rl_parent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                measuredHeight = ScreenUtils.getScreenHeight(RoomActivity.this) - rl_parent
-                        .getMeasuredHeight() - ScreenUtils.getStatusBarHeidht(RoomActivity.this);
+                measuredHeight = ScreenUtils.getScreenHeight(TeacherLiveActivity.this) - rl_parent
+                        .getMeasuredHeight() - ScreenUtils.getStatusBarHeidht(TeacherLiveActivity.this);
                 // 设置chatFragment的高度
                 setChatFragmentHeight();
                 // 设置frameLayout的高度

@@ -1,5 +1,7 @@
 package com.pili.pldroid.streaming.camera.demo.viewmodels;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -7,25 +9,24 @@ import com.pili.pldroid.streaming.camera.demo.activity.RegisterActivity;
 import com.pili.pldroid.streaming.camera.demo.bean.RegisterBean;
 import com.pili.pldroid.streaming.camera.demo.databinding.ActivityRegisterBinding;
 import com.pili.pldroid.streaming.camera.demo.interfaces.Urls;
-import com.pili.pldroid.streaming.camera.demo.utils.L;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import okhttp3.Call;
-import okhttp3.Response;
+import okhttp3.MediaType;
 
 /**
  * Created by admin on 2016/2/2.
  */
 public class RegisterActivityViewmodel {
-    private RegisterActivity mRegisterActivity;
+    private RegisterActivity mActivity;
     private ActivityRegisterBinding mBinding;
     private String regex = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}";
 //    private String regex = "\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
 
     public RegisterActivityViewmodel(RegisterActivity registerActivity, ActivityRegisterBinding
             binding) {
-        mRegisterActivity = registerActivity;
+        mActivity = registerActivity;
         mBinding = binding;
     }
 
@@ -44,15 +45,16 @@ public class RegisterActivityViewmodel {
         String confirm = mBinding.etConfirm.getText().toString().trim();
 
         if (validateUser(email, nickName, passWord, confirm)) {//前端验证
-            mRegisterActivity.showLoadingDialog();
+            mActivity.showLoadingDialog();
             RegisterBean registerBean = new RegisterBean();
             registerBean.setUser(new RegisterBean.UserEntity(nickName, email,
                     passWord, confirm));
             OkHttpUtils
                     .postString()
                     .url(Urls.register)
+                    .mediaType(MediaType.parse("application/json; charset=utf-8"))
                     .content(new Gson().toJson(registerBean))
-                    .tag(mRegisterActivity)
+                    .tag(mActivity)
                     .build()
                     .execute(new MyCallBack());
 
@@ -123,56 +125,21 @@ public class RegisterActivityViewmodel {
         return isAccessEmail & isAccessPsw & isAccessName & isAccessConrim;
     }
 
-    private class MyCallBack extends Callback{
-
-        @Override
-        public Object parseNetworkResponse(Response response) throws Exception {
-            L.e("response",response.body().string());
-            return null;
-        }
+    private class MyCallBack extends StringCallback{
 
         @Override
         public void onError(Call call, Exception e) {
-
+            mActivity.dismissLoadingDialog();
+            mActivity.showToast(e.getMessage());
         }
 
         @Override
-        public void onResponse(Object response) {
-
+        public void onResponse(String response) {
+            mActivity.dismissLoadingDialog();
+            Intent intent = new Intent();
+            intent.putExtra("info","注册成功");
+            mActivity.setResult(Activity.RESULT_OK,intent);
+            mActivity.finish();
         }
     }
-
-
-//    private class MyCallback extends Callback<RegisterBean> {
-//
-//        @Override
-//        public RegisterBean parseNetworkResponse(Response response) throws Exception {
-//            RegisterBean bean = new Gson().fromJson(response.body().string(), RegisterBean
-//                    .class);
-//            return bean;
-//        }
-//
-//        @Override
-//        public void onError(Call call, Exception e) {
-//            L.i(mRegisterActivity.TAG, "数据加载错误");
-//            mRegisterActivity.dismissLoadingDialog();
-//        }
-//
-//        @Override
-//        public void onResponse(RegisterBean response) {
-//            mRegisterActivity.dismissLoadingDialog();
-//            //注册成功
-//            L.i(mRegisterActivity.TAG, "返回码：" + response.code + "");
-//            if (response.code == 0) {//注册成功
-//                mRegisterActivity.showToast("注册成功");
-//                mRegisterActivity.finish();
-//            } else if (response.code == 1003 || response.code == 1002) {//验证码错误
-//                mBinding.tilVerification.setErrorEnabled(true);
-//                mBinding.tilVerification.setError(response.error);
-//            } else if (response.code == 2000) {
-//                mBinding.tilPhone.setErrorEnabled(true);
-//                mBinding.tilPhone.setError(response.error);
-//            }
-//        }
-//    }
 }

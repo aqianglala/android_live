@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
-
     <uses-feature android:name="android.hardware.camera.autofocus"/>
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -36,7 +35,6 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
-
         </activity>
         <!-- android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" > -->
         <activity
@@ -47,13 +45,11 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
         <activity android:name="org.kymjs.chat.ChatActivity"/>
         <!-- <activity android:name=".RoomActivity"> -->
@@ -71,6 +67,9 @@
         <activity android:name=".activity.RegisterActivity">
         </activity>
         <activity android:name=".activity.ShowUserInfoActivity">
+        </activity>
+        <activity android:name=".activity.PushActivity"
+                  android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
         </activity>
     </application>
 

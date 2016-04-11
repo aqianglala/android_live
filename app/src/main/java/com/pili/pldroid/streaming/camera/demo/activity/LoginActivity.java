@@ -8,6 +8,7 @@ import android.view.View;
 import com.pili.pldroid.streaming.camera.demo.R;
 import com.pili.pldroid.streaming.camera.demo.databinding.ActivityLoginBinding;
 import com.pili.pldroid.streaming.camera.demo.global.BaseActivity;
+import com.pili.pldroid.streaming.camera.demo.interfaces.Urls;
 import com.pili.pldroid.streaming.camera.demo.viewmodels.LoginActivityViewmodel;
 
 
@@ -37,13 +38,20 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void register(View view){
-        startActivity(new Intent(this,RegisterActivity.class));
+        startActivityForResult(new Intent(this,RegisterActivity.class), Urls.registerRequestCode);
     }
 
     public void login(View view){
         viewmodel.login();
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode ==Urls.registerRequestCode){
+            if(resultCode ==RESULT_OK){
+                showToast(data.getStringExtra("info"));
+            }
+        }
+    }
 }
 

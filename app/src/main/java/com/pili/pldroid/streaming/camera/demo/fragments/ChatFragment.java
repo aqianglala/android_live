@@ -132,21 +132,21 @@ public class ChatFragment extends KJFragment {
                 Message.MSG_STATE_SUCCESS, "\ue415", "avatar", "Jerry", "avatar",
                 new String(emoji), false, true, new Date(System.currentTimeMillis()
                 - (1000 * 60 * 60 * 24) * 8));
-//        Message message1 = new Message(Message.MSG_TYPE_TEXT,
-//                Message.MSG_STATE_SUCCESS, "Tom", "avatar", "Jerry", "avatar",
+//        MessageBean message1 = new MessageBean(MessageBean.MSG_TYPE_TEXT,
+//                MessageBean.MSG_STATE_SUCCESS, "Tom", "avatar", "Jerry", "avatar",
 //                "以后的版本支持链接高亮喔:http://www.kymjs.com支持http、https、svn、ftp开头的链接",
 //                true, true, new Date(System.currentTimeMillis() - (1000 * 60 * 60 * 24) * 8));
-//        Message message2 = new Message(Message.MSG_TYPE_PHOTO,
-//                Message.MSG_STATE_SUCCESS, "Tom", "avatar", "Jerry", "avatar",
+//        MessageBean message2 = new MessageBean(MessageBean.MSG_TYPE_PHOTO,
+//                MessageBean.MSG_STATE_SUCCESS, "Tom", "avatar", "Jerry", "avatar",
 //                "http://static.oschina.net/uploads/space/2015/0611/103706_rpPc_1157342.png",
 //                false, true, new Date(
 //                System.currentTimeMillis() - (1000 * 60 * 60 * 24) * 7));
-//        Message message6 = new Message(Message.MSG_TYPE_TEXT,
-//                Message.MSG_STATE_FAIL, "Tom", "avatar", "Jerry", "avatar",
+//        MessageBean message6 = new MessageBean(MessageBean.MSG_TYPE_TEXT,
+//                MessageBean.MSG_STATE_FAIL, "Tom", "avatar", "Jerry", "avatar",
 //                "test send fail", true, false, new Date(
 //                System.currentTimeMillis() - (1000 * 60 * 60 * 24) * 6));
-//        Message message7 = new Message(Message.MSG_TYPE_TEXT,
-//                Message.MSG_STATE_SENDING, "Tom", "avatar", "Jerry", "avatar",
+//        MessageBean message7 = new MessageBean(MessageBean.MSG_TYPE_TEXT,
+//                MessageBean.MSG_STATE_SENDING, "Tom", "avatar", "Jerry", "avatar",
 //                "<a href=\"http://kymjs.com\">自定义链接</a>也是支持的", true, true, new Date(System.currentTimeMillis()
 //                - (1000 * 60 * 60 * 24) * 6));
 

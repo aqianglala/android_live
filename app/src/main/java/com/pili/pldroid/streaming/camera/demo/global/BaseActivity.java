@@ -1,5 +1,6 @@
 package com.pili.pldroid.streaming.camera.demo.global;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.ActionBar;
@@ -89,11 +90,15 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         ToastUtil.show(text);
     }
 
+    public void goActivity(Class clazz){
+        this.startActivity(new Intent(this,clazz));
+    }
+
     public void showLoadingDialog() {
         if (mLoadingDialog == null) {
             mLoadingDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
             mLoadingDialog.getProgressHelper().setBarColor(getResources().getColor(R.color.colorPrimary));
-            mLoadingDialog.setCancelable(false);
+            mLoadingDialog.setCancelable(true);
             mLoadingDialog.setTitleText("数据加载中...");
         }
         mLoadingDialog.show();

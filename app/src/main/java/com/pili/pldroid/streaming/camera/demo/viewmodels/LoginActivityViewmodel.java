@@ -1,28 +1,33 @@
 package com.pili.pldroid.streaming.camera.demo.viewmodels;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.pili.pldroid.streaming.camera.demo.activity.LoginActivity;
 import com.pili.pldroid.streaming.camera.demo.bean.LoginBean;
+import com.pili.pldroid.streaming.camera.demo.bean.LoginResponse;
+import com.pili.pldroid.streaming.camera.demo.bean.MessageBean;
 import com.pili.pldroid.streaming.camera.demo.databinding.ActivityLoginBinding;
 import com.pili.pldroid.streaming.camera.demo.interfaces.Urls;
+import com.pili.pldroid.streaming.camera.demo.utils.AESUtils;
+import com.pili.pldroid.streaming.camera.demo.utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.simple.eventbus.EventBus;
 
 import okhttp3.Call;
-import okhttp3.Response;
+import okhttp3.MediaType;
 
 /**
  * Created by admin on 2016/2/2.
  */
 public class LoginActivityViewmodel {
-    private LoginActivity mLoginActivity;
+    private LoginActivity mActivity;
     private ActivityLoginBinding mBinding;
 
     public LoginActivityViewmodel(LoginActivity loginActivity , ActivityLoginBinding binding){
-        mLoginActivity=loginActivity;
+        mActivity=loginActivity;
         mBinding=binding;
     }
 
@@ -30,16 +35,17 @@ public class LoginActivityViewmodel {
         String email = mBinding.etEmail.getText().toString().trim();
         String password = mBinding.etPassword.getText().toString().trim();
         if(validateUser(email,password)){//前端验证
-            mLoginActivity.showLoadingDialog();
+            mActivity.showLoadingDialog();
             LoginBean loginBean = new LoginBean();
             loginBean.setSession(new LoginBean.SessionEntity(email,password));
             OkHttpUtils
                     .postString()
                     .url(Urls.login)
+                    .mediaType(MediaType.parse("application/json; charset=utf-8"))
                     .content(new Gson().toJson(loginBean))
-                    .tag(mLoginActivity)
+                    .tag(mActivity)
                     .build()
-                    .execute(new MyCallback());
+                    .execute(new MyCallBack());
         }
     }
 
@@ -65,22 +71,31 @@ public class LoginActivityViewmodel {
         return isAccessEmail & isAccessPass;
     }
 
-    private class MyCallback extends Callback{
-
-        @Override
-        public Object parseNetworkResponse(Response response) throws Exception {
-            Log.e("response",response.body().string());
-            return null;
-        }
+    private class MyCallBack extends StringCallback {
 
         @Override
         public void onError(Call call, Exception e) {
-
+            mActivity.dismissLoadingDialog();
+            mActivity.showToast(e.getMessage());
         }
 
         @Override
-        public void onResponse(Object response) {
-
+        public void onResponse(String response) {
+            mActivity.dismissLoadingDialog();
+            LoginResponse data = new Gson().fromJson(response.toString(), LoginResponse
+                    .class);
+            try {
+                SPUtils.put(mActivity,Urls.ID,data.getData().getId());
+                SPUtils.put(mActivity,Urls.USERNAME,data.getData().getUsername());
+                SPUtils.put(mActivity,Urls.EMAIL,data.getData().getEmail());
+                SPUtils.put(mActivity,Urls.TOKEN, AESUtils.encrypt(Urls.SEED,data.getData().getToken
+                        ()));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            // post a event with tag, the tag is like broadcast's action
+            EventBus.getDefault().post(new MessageBean("login success"), "updateUI");
+            mActivity.finish();
         }
     }
 

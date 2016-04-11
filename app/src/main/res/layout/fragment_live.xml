@@ -26,31 +26,30 @@
                 android:id="@+id/iv_search"
                 android:layout_width="60px"
                 android:layout_height="60px"
-                android:src="@drawable/icon_title_search"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
-                android:clickable="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+                android:clickable="true"
+                android:src="@drawable/icon_title_search"/>
 
         </android.support.v7.widget.Toolbar>
-
 
         <cn.bingoogolapple.refreshlayout.BGARefreshLayout
             android:id="@+id/rl_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/id_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@null"
-                android:listSelector="@android:color/transparent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/id_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:cacheColorHint="@android:color/transparent"
+                    android:divider="@null"
+                    android:listSelector="@android:color/transparent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
         </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
