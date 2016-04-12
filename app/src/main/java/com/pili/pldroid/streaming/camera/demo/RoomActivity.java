@@ -41,6 +41,7 @@ import com.pili.pldroid.streaming.camera.demo.global.BaseActivity;
 import com.pili.pldroid.streaming.camera.demo.interfaces.Urls;
 import com.pili.pldroid.streaming.camera.demo.utils.ScreenUtils;
 import com.pili.pldroid.streaming.camera.demo.utils.StreamJsonUtils;
+import com.pili.pldroid.streaming.camera.demo.viewmodels.QueueVM;
 import com.pili.pldroid.streaming.camera.demo.widget.AspectLayout;
 import com.pili.pldroid.streaming.widget.AspectFrameLayout;
 
@@ -154,6 +155,7 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
     private ImageView iv_audience;
     private LinearLayout ll_push_container;
     private LiveBean.DataEntity entity;
+    private QueueVM queueVM;
 
 
     @Override
@@ -161,6 +163,8 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         // 设置屏幕不锁屏、屏幕方向、设置actionbar覆盖在内容之上
         globalSet();
         setContentView(R.layout.activity_camera);
+
+        queueVM = new QueueVM(this);
 
         et_play = getViewById(R.id.et_play);
         et_push = getViewById(R.id.et_push);
@@ -332,6 +336,7 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         translateAnimation.setInterpolator(this,android.R.interpolator.anticipate_overshoot);
         fl_content.startAnimation(translateAnimation);
         isShowingFlContent = true;
+        queueVM.getCallQueue(entity.getId()+"");
     }
 
     private void hideLayout() {

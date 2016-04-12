@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pili.pldroid.streaming.camera.demo.R;
-import com.pili.pldroid.streaming.camera.demo.activity.PushActivity;
+import com.pili.pldroid.streaming.camera.demo.RoomActivity;
 import com.pili.pldroid.streaming.camera.demo.activity.SearchActivity;
 import com.pili.pldroid.streaming.camera.demo.adapter.LiveAdapter;
 import com.pili.pldroid.streaming.camera.demo.bean.LiveBean;
@@ -127,7 +127,7 @@ public class LiveFragment extends BaseFragment implements BGARefreshLayout.BGARe
 
     @Override
     public void onRVItemClick(ViewGroup viewGroup, View view, int i) {
-        Intent intent = new Intent(mActivity, PushActivity.class);
+        Intent intent = new Intent(mActivity, RoomActivity.class);
         intent.putExtra(Urls.ROOM_INFO,mAdapter.getItem(i));
         mActivity.startActivity(intent);
     }

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.pili.pldroid.streaming.camera.demo.R;
+import com.pili.pldroid.streaming.camera.demo.activity.PushActivity;
 import com.pili.pldroid.streaming.camera.demo.utils.L;
 import com.pili.pldroid.streaming.camera.demo.utils.ToastUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -84,6 +85,11 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * @param v
      */
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fab:
+                goActivity(PushActivity.class);
+                break;
+        }
     }
 
     public void showToast(String text) {

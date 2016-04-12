@@ -16,4 +16,6 @@
     <dimen name="item_margin">20px</dimen>
 
     <dimen name="small_text">12sp</dimen>
+
+    <dimen name="fab_margin">0dp</dimen>
 </resources>

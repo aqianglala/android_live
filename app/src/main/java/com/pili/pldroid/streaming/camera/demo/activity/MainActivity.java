@@ -1,6 +1,7 @@
 package com.pili.pldroid.streaming.camera.demo.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
@@ -16,17 +17,20 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private RadioGroup mRadioGroup;
     private LiveFragment mLiveFragment;
     private MeFragment mMeFragment;
+    private FloatingActionButton fab;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
 
         mRadioGroup = getViewById(R.id.id_radioGroup);
+        fab = getViewById(R.id.fab);
     }
 
     @Override
     protected void setListener() {
         mRadioGroup.setOnCheckedChangeListener(this);
+        fab.setOnClickListener(this);
     }
 
     @Override

@@ -10,8 +10,11 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,7 +70,8 @@ public class PushActivity extends BaseActivity implements
             }
         }
     };
-
+    private AspectFrameLayout afl;
+    private GLSurfaceView glSurfaceView;
 
 
     @Override
@@ -85,8 +89,8 @@ public class PushActivity extends BaseActivity implements
 
         /****************************/
 
-        AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
-        GLSurfaceView glSurfaceView = (GLSurfaceView) findViewById(R.id.cameraPreview_surfaceView);
+        afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
+        glSurfaceView = (GLSurfaceView) findViewById(R.id.cameraPreview_surfaceView);
         afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
 
 
@@ -123,6 +127,26 @@ public class PushActivity extends BaseActivity implements
     @Override
     protected void setListener() {
         mBinding.btnCreate.setOnClickListener(this);
+        mBinding.llPushContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver
+                .OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mBinding.llPushContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                int measuredWidth = mBinding.llPushContainer.getMeasuredWidth();
+                int height = measuredWidth * 4 / 3;
+
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) afl.getLayoutParams();
+                layoutParams.width = measuredWidth;
+                layoutParams.height = height;
+                afl.setLayoutParams(layoutParams);
+
+                ViewGroup.LayoutParams layoutParams1 = glSurfaceView.getLayoutParams();
+                layoutParams1.width = measuredWidth;
+                layoutParams1.height = height;
+                glSurfaceView.setLayoutParams(layoutParams1);
+
+            }
+        });
     }
 
     @Override
