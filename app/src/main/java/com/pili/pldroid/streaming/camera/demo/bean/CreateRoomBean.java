@@ -8,15 +8,11 @@ import java.util.List;
 public class CreateRoomBean {
 
     /**
-     * id : 22
-     * title : Learn English
-     * image : null
-     * live : null
-     * rtmp_url : rtmp://ilikemac.local/live/22
-     * mic_rtmp_url : rtmp://ilikemac.local/mic/22
-     * broadcaster : {"id":7,"username":"qiang","avatar_url":"https://secure.gravatar
-     * .com/avatar/0f2b7b1570db6f20423cac2142646beb?s=80"}
+     * broadcaster : {"avatar_url":"https://secure.gravatar
+     * .com/avatar/0f2b7b1570db6f20423cac2142646beb?s=80","id":7,"username":"qiang"}
+     * id : 49
      * messages : []
+     * title : 啊啊啊
      */
 
     private DataEntity data;
@@ -30,20 +26,20 @@ public class CreateRoomBean {
     }
 
     public static class DataEntity {
-        private int id;
-        private String title;
-        private Object image;
-        private Object live;
-        private String rtmp_url;
-        private String mic_rtmp_url;
         /**
+         * avatar_url : https://secure.gravatar.com/avatar/0f2b7b1570db6f20423cac2142646beb?s=80
          * id : 7
          * username : qiang
-         * avatar_url : https://secure.gravatar.com/avatar/0f2b7b1570db6f20423cac2142646beb?s=80
          */
 
         private BroadcasterEntity broadcaster;
+        private int id;
+        private String title;
         private List<?> messages;
+
+        public void setBroadcaster(BroadcasterEntity broadcaster) {
+            this.broadcaster = broadcaster;
+        }
 
         public void setId(int id) {
             this.id = id;
@@ -53,28 +49,12 @@ public class CreateRoomBean {
             this.title = title;
         }
 
-        public void setImage(Object image) {
-            this.image = image;
-        }
-
-        public void setLive(Object live) {
-            this.live = live;
-        }
-
-        public void setRtmp_url(String rtmp_url) {
-            this.rtmp_url = rtmp_url;
-        }
-
-        public void setMic_rtmp_url(String mic_rtmp_url) {
-            this.mic_rtmp_url = mic_rtmp_url;
-        }
-
-        public void setBroadcaster(BroadcasterEntity broadcaster) {
-            this.broadcaster = broadcaster;
-        }
-
         public void setMessages(List<?> messages) {
             this.messages = messages;
+        }
+
+        public BroadcasterEntity getBroadcaster() {
+            return broadcaster;
         }
 
         public int getId() {
@@ -85,34 +65,18 @@ public class CreateRoomBean {
             return title;
         }
 
-        public Object getImage() {
-            return image;
-        }
-
-        public Object getLive() {
-            return live;
-        }
-
-        public String getRtmp_url() {
-            return rtmp_url;
-        }
-
-        public String getMic_rtmp_url() {
-            return mic_rtmp_url;
-        }
-
-        public BroadcasterEntity getBroadcaster() {
-            return broadcaster;
-        }
-
         public List<?> getMessages() {
             return messages;
         }
 
         public static class BroadcasterEntity {
+            private String avatar_url;
             private int id;
             private String username;
-            private String avatar_url;
+
+            public void setAvatar_url(String avatar_url) {
+                this.avatar_url = avatar_url;
+            }
 
             public void setId(int id) {
                 this.id = id;
@@ -122,8 +86,8 @@ public class CreateRoomBean {
                 this.username = username;
             }
 
-            public void setAvatar_url(String avatar_url) {
-                this.avatar_url = avatar_url;
+            public String getAvatar_url() {
+                return avatar_url;
             }
 
             public int getId() {
@@ -132,10 +96,6 @@ public class CreateRoomBean {
 
             public String getUsername() {
                 return username;
-            }
-
-            public String getAvatar_url() {
-                return avatar_url;
             }
         }
     }

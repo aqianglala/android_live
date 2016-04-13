@@ -23,6 +23,7 @@ public class PushActivityVM {
 
     private PushActivity mActivity;
     private ActivityPushBinding mBinding;
+    private String token;
 
     public PushActivityVM(PushActivity activity, ActivityPushBinding binding) {
         mActivity = activity;
@@ -36,7 +37,7 @@ public class PushActivityVM {
            return;
         }
         try {
-            String token = AESUtils.decrypt(Urls.SEED,(String) SPUtils.get(mActivity, Urls.TOKEN, ""));
+            token = AESUtils.decrypt(Urls.SEED,(String) SPUtils.get(mActivity, Urls.TOKEN, ""));
             if(TextUtils.isEmpty(token)){
                 mActivity.showToast("请先登录");
             }else{
@@ -45,7 +46,7 @@ public class PushActivityVM {
                 OkHttpUtils
                         .postString()
                         .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                        .addHeader("Authorization","Token token="+token)
+                        .addHeader("Authorization","Token token="+ token)
                         .url(Urls.rooms)
                         .content(new Gson().toJson(roomParamsBean))
                         .build()
@@ -68,9 +69,9 @@ public class PushActivityVM {
             mActivity.showToast(response);
             // 设置推流地址
             CreateRoomBean createRoomBean = new Gson().fromJson(response, CreateRoomBean.class);
-            String rtmp_url = createRoomBean.getData().getRtmp_url();
-            String replace = rtmp_url.replace("ilikemac.local", Urls.IP);
-            mActivity.setStream(replace);
+            String rtmp_url = "rtmp://192.168.1.102/mic/" + createRoomBean.getData().getId
+                    () + "?token=" + token;
+            mActivity.setStream(rtmp_url);
         }
     }
 }

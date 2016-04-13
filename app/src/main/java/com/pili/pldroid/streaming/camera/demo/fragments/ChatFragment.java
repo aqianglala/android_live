@@ -3,6 +3,7 @@ package com.pili.pldroid.streaming.camera.demo.fragments;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,8 +11,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.pili.pldroid.streaming.camera.demo.R;
+import com.pili.pldroid.streaming.camera.demo.viewmodels.ChatFragmentVM;
 
 import org.kymjs.chat.ChatActivity;
 import org.kymjs.chat.OnOperationListener;
@@ -29,7 +32,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by admin on 2016/3/18.
@@ -43,9 +45,14 @@ public class ChatFragment extends KJFragment {
 
     List<Message> datas = new ArrayList<Message>();
     private ChatAdapter adapter;
+    private ChatFragmentVM mViewmodel;
+
+    private Handler handler = new Handler();
+
     @Override
     protected View inflaterView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         View rootView = layoutInflater.inflate(R.layout.activity_chat, viewGroup, false);
+        mViewmodel = new ChatFragmentVM(this);
         return rootView;
     }
 
@@ -64,13 +71,12 @@ public class ChatFragment extends KJFragment {
         box.setOnOperationListener(new OnOperationListener() {
             @Override
             public void send(String content) {
-                Message message = new Message(Message.MSG_TYPE_TEXT, Message.MSG_STATE_SUCCESS,
-                        "Tom", "avatar", "Jerry",
-                        "avatar", content, true, true, new Date());
-                datas.add(message);
-                adapter.refresh(datas);
-                mRealListView.setSelection(datas.size());
-                createReplayMsg(message);
+                // 发送到服务端
+                if(mViewmodel.sendMessage(content)){// 发送成功
+                    Toast.makeText(getActivity(),"发送成功",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"发送失败",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -80,7 +86,7 @@ public class ChatFragment extends KJFragment {
                         Date());
                 datas.add(message);
                 adapter.refresh(datas);
-                createReplayMsg(message);
+//                createReplayMsg(message);
             }
 
             @Override
@@ -124,14 +130,25 @@ public class ChatFragment extends KJFragment {
         mRealListView.setOnTouchListener(getOnTouchListener());
     }
 
+    public void refreshAdapter(final Message message) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                datas.add(message);
+                adapter.refresh(datas);
+                mRealListView.setSelection(datas.size());
+            }
+        });
+    }
+
     private void initListView() {
-        byte[] emoji = new byte[]{
-                (byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x81
-        };
-        Message message = new Message(Message.MSG_TYPE_TEXT,
-                Message.MSG_STATE_SUCCESS, "\ue415", "avatar", "Jerry", "avatar",
-                new String(emoji), false, true, new Date(System.currentTimeMillis()
-                - (1000 * 60 * 60 * 24) * 8));
+//        byte[] emoji = new byte[]{
+//                (byte) 0xF0, (byte) 0x9F, (byte) 0x98, (byte) 0x81
+//        };
+//        Message message = new Message(Message.MSG_TYPE_TEXT,
+//                Message.MSG_STATE_SUCCESS, "\ue415", "avatar", "Jerry", "avatar",
+//                new String(emoji), false, true, new Date(System.currentTimeMillis()
+//                - (1000 * 60 * 60 * 24) * 8));
 //        MessageBean message1 = new MessageBean(MessageBean.MSG_TYPE_TEXT,
 //                MessageBean.MSG_STATE_SUCCESS, "Tom", "avatar", "Jerry", "avatar",
 //                "以后的版本支持链接高亮喔:http://www.kymjs.com支持http、https、svn、ftp开头的链接",
@@ -150,7 +167,7 @@ public class ChatFragment extends KJFragment {
 //                "<a href=\"http://kymjs.com\">自定义链接</a>也是支持的", true, true, new Date(System.currentTimeMillis()
 //                - (1000 * 60 * 60 * 24) * 6));
 
-        datas.add(message);
+//        datas.add(message);
 //        datas.add(message1);
 //        datas.add(message2);
 //        datas.add(message6);
@@ -158,30 +175,6 @@ public class ChatFragment extends KJFragment {
 
         adapter = new ChatAdapter(getActivity(), datas, getOnChatItemClickListener());
         mRealListView.setAdapter(adapter);
-    }
-
-    private void createReplayMsg(Message message) {
-        final Message reMessage = new Message(message.getType(), Message.MSG_STATE_SUCCESS, "Tom",
-                "avatar", "Jerry", "avatar", message.getType() == Message.MSG_TYPE_TEXT ? "返回:"
-                + message.getContent() : message.getContent(), false,
-                true, new Date());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000 * (new Random().nextInt(3) + 1));
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            datas.add(reMessage);
-                            adapter.refresh(datas);
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
 //    @Override
@@ -234,7 +227,7 @@ public class ChatFragment extends KJFragment {
     }
 
     /**
-     * @return 聊天列表内存点击事件监听器
+     * @return 聊天列表内容点击事件监听器
      */
     private OnChatItemClickListener getOnChatItemClickListener() {
         return new OnChatItemClickListener() {
@@ -263,5 +256,17 @@ public class ChatFragment extends KJFragment {
         void onTextClick(int position);
 
         void onFaceClick(int position);
+    }
+
+    private int roomId;
+    public void setRoomId(int roomId){
+        this.roomId = roomId;
+        mViewmodel.connect(roomId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mViewmodel.closeSocket();
     }
 }

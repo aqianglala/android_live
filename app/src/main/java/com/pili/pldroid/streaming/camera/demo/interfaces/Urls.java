@@ -7,8 +7,8 @@ public interface Urls {
     String baseUrl = "http://192.168.1.102:3000";
     String register = baseUrl+"/users";
     String login = baseUrl+"/sessions";
-    String rooms = baseUrl+"/mic";
-    String queued = baseUrl+"/rooms/room_id/calls/queued";
+    String rooms = baseUrl+"/rooms";
+    String queued = baseUrl+"/rooms/room_id/calls";
 
     String SEED = "live";
 
@@ -23,5 +23,5 @@ public interface Urls {
     String ROOM_INFO = "room_info";
     String IP="192.168.1.102";
 
-    String SOCKET = "http://192.168.1.102:3000/cable";
+    String SOCKET = "ws://192.168.1.102:3000/cable";
 }

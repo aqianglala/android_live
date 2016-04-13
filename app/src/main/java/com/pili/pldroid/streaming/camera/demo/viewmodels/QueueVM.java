@@ -1,5 +1,7 @@
 package com.pili.pldroid.streaming.camera.demo.viewmodels;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.pili.pldroid.streaming.camera.demo.RoomActivity;
 import com.pili.pldroid.streaming.camera.demo.bean.QueueBean;
@@ -46,7 +48,8 @@ public class QueueVM {
 
         @Override
         public void onResponse(QueueBean response) {
-            L.e("queue",response.getData().size()+"");
+            Log.e("queue",response.getData().size()+"");
+
         }
     }
 }

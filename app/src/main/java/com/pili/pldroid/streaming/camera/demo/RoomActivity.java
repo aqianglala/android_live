@@ -37,6 +37,7 @@ import com.pili.pldroid.streaming.StreamingPreviewCallback;
 import com.pili.pldroid.streaming.StreamingProfile;
 import com.pili.pldroid.streaming.SurfaceTextureCallback;
 import com.pili.pldroid.streaming.camera.demo.bean.LiveBean;
+import com.pili.pldroid.streaming.camera.demo.fragments.ChatFragment;
 import com.pili.pldroid.streaming.camera.demo.global.BaseActivity;
 import com.pili.pldroid.streaming.camera.demo.interfaces.Urls;
 import com.pili.pldroid.streaming.camera.demo.utils.ScreenUtils;
@@ -321,6 +322,8 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
     protected void processLogic(Bundle savedInstanceState) {
         // 获取传过来的数据
         entity = (LiveBean.DataEntity) getIntent().getSerializableExtra(Urls.ROOM_INFO);
+        ChatFragment chatFragment = (ChatFragment) getFragmentManager().findFragmentById(R.id.id_fragment);
+        chatFragment.setRoomId(entity.getId());
         initPlayer();
         // 初始化推流
         initPush();
