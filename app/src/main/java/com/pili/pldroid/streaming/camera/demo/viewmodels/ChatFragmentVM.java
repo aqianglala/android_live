@@ -11,6 +11,7 @@ import com.hosopy.actioncable.Cable;
 import com.hosopy.actioncable.Channel;
 import com.hosopy.actioncable.Consumer;
 import com.hosopy.actioncable.Subscription;
+import com.pili.pldroid.streaming.camera.demo.bean.MessageBean;
 import com.pili.pldroid.streaming.camera.demo.fragments.ChatFragment;
 import com.pili.pldroid.streaming.camera.demo.interfaces.Urls;
 import com.pili.pldroid.streaming.camera.demo.utils.AESUtils;
@@ -20,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kymjs.chat.bean.Message;
+import org.simple.eventbus.EventBus;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -114,21 +116,50 @@ public class ChatFragmentVM {
             }
         });
 
+
+        // 2. Create subscription
+        Channel notificationsChannel = new Channel("NotificationsChannel");
+        subscription = consumer.getSubscriptions().create(notificationsChannel);
+
+        subscription.onConnected(new Subscription.ConnectedCallback() {
+            @Override
+            public void call() {
+                // Called when the subscription has been successfully completed
+                isConnected = true;
+                Log.e(tag,"连接成功");
+            }
+
+        }).onRejected(new Subscription.RejectedCallback() {
+            @Override
+            public void call() {
+                // Called when the subscription is rejected by the server
+                isConnected = false;
+                Log.e(tag,"onRejected");
+            }
+        }).onReceived(new Subscription.ReceivedCallback() {
+            @Override
+            public void call(JsonElement data) {
+                // Called when the subscription receives data from the server
+                Log.e(tag,"接收到服务器返回的信息"+data.toString());
+            }
+        }).onDisconnected(new Subscription.DisconnectedCallback() {
+            @Override
+            public void call() {
+                // Called when the subscription has been closed
+                isConnected = false;
+                Log.e(tag,"onDisconnected");
+            }
+        }).onFailed(new Subscription.FailedCallback() {
+            @Override
+            public void call(ActionCableException e) {
+                // Called when the subscription encounters any error
+                isConnected = false;
+                Log.e(tag,"onFailed");
+            }
+        });
+
 // 3. Open connection
         consumer.open();
-
-// 4. Perform any action
-//        subscription.perform("away");
-
-// 5. Perform any action using JsonObject(GSON)
-//        JsonObject params = new JsonObject();
-//        params.addProperty("foo", "bar");
-//        subscription.perform("appear", params);
-
-        // 发送聊天消息
-//        JsonObject params = new JsonObject();
-//        params.addProperty("message", "hello");
-//        subscription.perform("speak", params);
     }
 
     public boolean sendMessage(String content) {
@@ -153,6 +184,7 @@ public class ChatFragmentVM {
         try {
             JSONArray jsonArray = new JSONArray(data.toString());
             String key = (String) jsonArray.get(0);
+            Log.e("key",key);
             if("join".equals(key)){
                 JSONObject jsonObject = jsonArray.getJSONObject(1);
                 reMessage = new Message(Message.MSG_TYPE_TEXT, Message.MSG_STATE_SUCCESS,
@@ -167,6 +199,11 @@ public class ChatFragmentVM {
                         null,null,jsonObject.getString("content") , sent_by.getString
                         ("username").equals(username)?true:false, true,
                         new Date());
+            }else if("mic acquired".equals(key)){
+                // 更新抢麦列表
+                Log.e("mic acquired",data.toString());
+                // post a event with tag, the tag is like broadcast's action
+                EventBus.getDefault().post(new MessageBean("update_queue"), "update_queue");
             }
         } catch (JSONException e) {
             e.printStackTrace();

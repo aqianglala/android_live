@@ -1,6 +1,7 @@
 package com.pili.pldroid.streaming.camera.demo.viewmodels;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.pili.pldroid.streaming.camera.demo.activity.LoginActivity;
@@ -84,6 +85,7 @@ public class LoginActivityViewmodel {
             mActivity.dismissLoadingDialog();
             LoginResponse data = new Gson().fromJson(response.toString(), LoginResponse
                     .class);
+            Log.e("token",data.getData().getToken());
             try {
                 SPUtils.put(mActivity,Urls.ID,data.getData().getId());
                 SPUtils.put(mActivity,Urls.USERNAME,data.getData().getUsername());

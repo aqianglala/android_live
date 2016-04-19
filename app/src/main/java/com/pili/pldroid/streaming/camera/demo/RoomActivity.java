@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,10 +37,14 @@ import com.pili.pldroid.streaming.CameraStreamingSetting;
 import com.pili.pldroid.streaming.StreamingPreviewCallback;
 import com.pili.pldroid.streaming.StreamingProfile;
 import com.pili.pldroid.streaming.SurfaceTextureCallback;
+import com.pili.pldroid.streaming.camera.demo.adapter.QueueAdapter;
 import com.pili.pldroid.streaming.camera.demo.bean.LiveBean;
+import com.pili.pldroid.streaming.camera.demo.bean.MessageBean;
+import com.pili.pldroid.streaming.camera.demo.bean.QueueBean;
 import com.pili.pldroid.streaming.camera.demo.fragments.ChatFragment;
 import com.pili.pldroid.streaming.camera.demo.global.BaseActivity;
 import com.pili.pldroid.streaming.camera.demo.interfaces.Urls;
+import com.pili.pldroid.streaming.camera.demo.utils.SPUtils;
 import com.pili.pldroid.streaming.camera.demo.utils.ScreenUtils;
 import com.pili.pldroid.streaming.camera.demo.utils.StreamJsonUtils;
 import com.pili.pldroid.streaming.camera.demo.viewmodels.QueueVM;
@@ -47,7 +52,10 @@ import com.pili.pldroid.streaming.camera.demo.widget.AspectLayout;
 import com.pili.pldroid.streaming.widget.AspectFrameLayout;
 
 import org.json.JSONObject;
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -157,6 +165,10 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
     private LinearLayout ll_push_container;
     private LiveBean.DataEntity entity;
     private QueueVM queueVM;
+    private ListView lv_queue;
+    private QueueAdapter queueAdapter;
+    private TextView tv_title;
+    private Button btn_call;
 
 
     @Override
@@ -164,6 +176,9 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         // 设置屏幕不锁屏、屏幕方向、设置actionbar覆盖在内容之上
         globalSet();
         setContentView(R.layout.activity_camera);
+
+        // register the receiver object
+        EventBus.getDefault().register(this);
 
         queueVM = new QueueVM(this);
 
@@ -188,6 +203,10 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         mSatusTextView =  getViewById(R.id.streamingStatus);
 
         ll_push_container = getViewById(R.id.ll_push_container);
+        // 抢麦列表
+        lv_queue = getViewById(R.id.lv_queue);
+        tv_title = getViewById(R.id.tv_title);
+        btn_call = getViewById(R.id.btn_call);
 
     }
     // 设置屏幕不锁屏、屏幕方向、设置actionbar覆盖在内容之上
@@ -299,6 +318,8 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
                 }
             }
         });
+        // 抢麦
+        btn_call.setOnClickListener(this);
     }
 
     private void setFlHeight() {
@@ -353,6 +374,39 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         isShowingFlContent = false;
     }
 
+    private List<QueueBean.DataEntity> queueData = new ArrayList<>();
+    private boolean isQueued;
+    public void setAdapter(List<QueueBean.DataEntity> data){
+        int id = (int) SPUtils.get(this, Urls.ID, -1);
+        // 检查是否在队列中
+        isQueued = false;
+        for(QueueBean.DataEntity entity :data){
+            if(entity.getUser().getId() == id){
+                // 更新按钮样式
+                isQueued = true;
+            }
+        }
+        updateBtn();
+
+        queueData.clear();
+        queueData.addAll(data);
+        if(queueAdapter == null){
+            queueAdapter = new QueueAdapter(this,queueData);
+            lv_queue.setAdapter(queueAdapter);
+        }else{
+            queueAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void updateBtn() {
+        if(isQueued){
+            btn_call.setText("退出队列");
+        }else{
+            btn_call.setText("抢麦");
+        }
+    }
+
+
     private void initPlayer() {
         mAspectLayout = (AspectLayout)findViewById(R.id.aspect_layout);
         AVOptions options = new AVOptions();
@@ -386,8 +440,10 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        // Don’t forget to unregister !!
+        EventBus.getDefault().unregister(this);
         mCameraStreamingManager.onDestroy();
+        super.onDestroy();
     }
 
     @Override
@@ -580,6 +636,13 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
                     showLayout();
                 }
                 break;
+            case R.id.btn_call:
+                if(isQueued){
+                    queueVM.quitQueue();
+                }else{
+                    queueVM.call();
+                }
+                break;
         }
     }
 
@@ -713,5 +776,12 @@ public class RoomActivity extends BaseActivity  implements View.OnLayoutChangeLi
         layoutParams.width = displayMetrics.widthPixels;
         layoutParams.height = (int) (displayMetrics.widthPixels * ((float)height/width));
         mVideoView.setLayoutParams(layoutParams);
+    }
+
+    // When there is a “my_tag”, only events designated with “my_tag” can
+    // trigger the function and execute on UI thread when a user posts an event.
+    @Subscriber(tag = "update_queue")
+    private void updateUserWithTag(MessageBean message) {
+        Log.e("", "### update user with my_tag, name = " + message.message);
     }
 }

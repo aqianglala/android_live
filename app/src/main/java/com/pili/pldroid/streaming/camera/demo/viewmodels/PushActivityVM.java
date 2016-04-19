@@ -1,6 +1,7 @@
 package com.pili.pldroid.streaming.camera.demo.viewmodels;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.pili.pldroid.streaming.camera.demo.activity.PushActivity;
@@ -61,16 +62,19 @@ public class PushActivityVM {
 
         @Override
         public void onError(Call call, Exception e) {
+            Log.e("createRoom",e.getMessage());
             mActivity.showToast(e.getMessage());
         }
 
         @Override
         public void onResponse(String response) {
+            Log.e("onResponse",response);
             mActivity.showToast(response);
             // 设置推流地址
             CreateRoomBean createRoomBean = new Gson().fromJson(response, CreateRoomBean.class);
-            String rtmp_url = "rtmp://192.168.1.102/mic/" + createRoomBean.getData().getId
+            String rtmp_url = Urls.push + createRoomBean.getData().getId
                     () + "?token=" + token;
+            Log.e("onResponse",rtmp_url);
             mActivity.setStream(rtmp_url);
         }
     }
